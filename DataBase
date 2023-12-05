@@ -1,0 +1,36 @@
+create table account (
+	id int not null auto_increment primary key,
+	name varchar(200) not null,
+	username varchar(100) unique not null,
+	passwords varchar(50) not null,
+	address varchar (100) not null,
+	role enum ('admin', 'customer')
+)
+
+create table products (
+	id int not null auto_increment primary key,
+	name varchar(200) not null, 
+	price int not null,
+	quantity int not null
+)
+
+create table orders (
+	id int not null auto_increment primary key,
+	customer_id int not null,
+	products_id int not null,
+	foreign key (customer_id) references account(id),
+	foreign key (products_id) references products(id)
+)
+
+create table cart(
+	id int not null auto_increment primary key,
+	products_id int not null,
+	foreign key (products_id) references products (id)
+)
+
+create table payments(
+	id int not null auto_increment primary key,
+	order_id int not null,
+	mode_payment varchar(50) not null,
+	foreign key (order_id) references orders (id)
+)
